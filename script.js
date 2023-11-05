@@ -31,14 +31,14 @@ const boosters = [
 
 // funcion que agrega productos al carrito, toma product como parametro, que es uno de los boosters del array
 function agregarAlCarrito(product) {
-
   const existingProduct = carrito.find((item) => item.id === product.id);
 
   if (existingProduct) {
     // si el producto ya existe, incrementa la cantidad por 1
     existingProduct.cantidad += 1;
   } else {
-    // si es un nuevo producto, agregar al carrito con cantidad 1
+    // si es un nuevo, add it to the cart with quantity 1
+    product.cantidad = 1;
     carrito.push(product);
   }
 
@@ -55,7 +55,13 @@ function actualizarCarrito() {
 
   carrito.forEach((item) => {
     const li = document.createElement("li");
-    li.innerHTML = `  <img src="${item.imagen}" style="width: 30px; height: 60px;" alt="">  ${item.nombre} - $ ${item.precio * item.cantidad.toFixed(2)}`;
+    li.innerHTML = `  <img src="${
+      item.imagen
+    }" style="width: 30px; height: 60px;" alt="">  ${item.nombre} - $ ${
+      item.precio * item.cantidad.toFixed(2)
+    } Cantidad: ${
+      item.cantidad
+    } <button class="btn btn-success plus">+</button ><button class="btn btn-danger less">-</button> `;
     cartItems.appendChild(li);
 
     total += item.precio * item.cantidad;
@@ -67,7 +73,7 @@ function actualizarCarrito() {
 const addToCartButtons = document.querySelectorAll(".agregar");
 addToCartButtons.forEach((button, index) => {
   button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
-});
 
+});
 
 actualizarCarrito();
