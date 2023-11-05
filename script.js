@@ -1,5 +1,8 @@
+
+// creo un array vacio, que representa el carrito donde se van a agregar los items
 const carrito = [];
 
+// contiene una lista de boosters distintos 
 const boosters = [
   {
     id: 1,
@@ -27,29 +30,41 @@ const boosters = [
   },
 ];
 
-// se va a buscar si booster está creado en localStorage, si no esta, se va a cargar(setItem), si ya existe, no hace nada.
-JSON.parse(localStorage.getItem("boosters")) || localStorage.setItem("boosters", JSON.stringify(boosters));
-console.log(boosters[0]);
-console.log(boosters[1]);
+// funcion que agrega productos al carrito, toma product como parametro, que es uno de los boosters del array
+function agregarAlCarrito(product) {
+  carrito.push(product);
 
-
-function agregarAlCarrito(product){
-    carrito.push(product);
-
-
-    actualizarCarrito();
+  // Update the cart display
+  actualizarCarrito();
 }
 
+// Function to update the cart display
+function actualizarCarrito() {
+  const cartItems = document.getElementById("cart-items");
+  const totalDisplay = document.getElementById("total");
 
-function actualizarCarrito(){
-    const cartItems = document.getElementById("cart-items");
-    const totalDisplay = document.getElementById("total");
+  // Clear the current cart display
+  cartItems.innerHTML = "";
 
-    cartItems.innerHTML = "";
+  let total = 0;
 
-    let total = 0;
+  carrito.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} - $${item.precio.toFixed(2)}`;
+    cartItems.appendChild(li);
 
+    total += item.precio;
+  });
+
+  // Update the total price display
+  totalDisplay.textContent = total.toFixed(2);
 }
 
+// Add a click event listener to the "Agregar al Carrito" buttons for each product
+const addToCartButtons = document.querySelectorAll(".agregar");
+addToCartButtons.forEach((button, index) => {
+  button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
+});
 
-
+// Call the updateCart function initially to set up the cart display
+actualizarCarrito();

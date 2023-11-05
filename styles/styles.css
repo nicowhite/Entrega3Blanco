@@ -1,4 +1,15 @@
 
+.container {
+    display: flex;
+    justify-content: end;
+}
+
+
 .card-img-top {
     width: 10rem;
+}
+
+.btn {
+    background-color: #6610f2;
+    border-color: #6610f2;
 }
