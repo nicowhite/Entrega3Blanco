@@ -1,8 +1,7 @@
-
 // creo un array vacio, que representa el carrito donde se van a agregar los items
 const carrito = [];
 
-// contiene una lista de boosters distintos 
+// contiene una lista de boosters distintos
 const boosters = [
   {
     id: 1,
@@ -32,39 +31,43 @@ const boosters = [
 
 // funcion que agrega productos al carrito, toma product como parametro, que es uno de los boosters del array
 function agregarAlCarrito(product) {
-  carrito.push(product);
 
-  // Update the cart display
+  const existingProduct = carrito.find((item) => item.id === product.id);
+
+  if (existingProduct) {
+    // si el producto ya existe, incrementa la cantidad por 1
+    existingProduct.cantidad += 1;
+  } else {
+    // si es un nuevo producto, agregar al carrito con cantidad 1
+    carrito.push(product);
+  }
+
   actualizarCarrito();
 }
 
-// Function to update the cart display
 function actualizarCarrito() {
   const cartItems = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("total");
 
-  // Clear the current cart display
   cartItems.innerHTML = "";
 
   let total = 0;
 
   carrito.forEach((item) => {
     const li = document.createElement("li");
-    li.textContent = `${item.nombre} - $${item.precio.toFixed(2)}`;
+    li.innerHTML = `  <img src="${item.imagen}" style="width: 30px; height: 60px;" alt="">  ${item.nombre} - $ ${item.precio * item.cantidad.toFixed(2)}`;
     cartItems.appendChild(li);
 
-    total += item.precio;
+    total += item.precio * item.cantidad;
   });
 
-  // Update the total price display
   totalDisplay.textContent = total.toFixed(2);
 }
 
-// Add a click event listener to the "Agregar al Carrito" buttons for each product
 const addToCartButtons = document.querySelectorAll(".agregar");
 addToCartButtons.forEach((button, index) => {
   button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
 });
 
-// Call the updateCart function initially to set up the cart display
+
 actualizarCarrito();
