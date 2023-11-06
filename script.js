@@ -5,27 +5,27 @@ const carrito = [];
 const boosters = [
   {
     id: 1,
-    nombre: "Phyrexia Booster",
+    nombre: "Eldraine Draft Booster",
     precio: 15,
-    imagen: "images/booster.png",
+    imagen: "images/booster.jpg",
   },
   {
     id: 2,
-    nombre: "Dominaria Booster",
+    nombre: "Eldraine Set Booster",
     precio: 11,
-    imagen: "images/booster2.png",
+    imagen: "images/booster2.jpg",
   },
   {
     id: 3,
-    nombre: "Dominaria Draft Booster",
+    nombre: "The Brothers War Booster",
     precio: 24,
-    imagen: "images/booster3.png",
+    imagen: "images/booster3.jpg",
   },
   {
     id: 4,
     nombre: "Phyrexia Draft Booster",
     precio: 6,
-    imagen: "images/booster4.png",
+    imagen: "images/booster4.jpg",
   },
 ];
 
@@ -57,7 +57,7 @@ function actualizarCarrito() {
     const li = document.createElement("li");
     li.innerHTML = `  <img src="${
       item.imagen
-    }" style="width: 30px; height: 60px;" alt="">  ${item.nombre} - $ ${
+    }" style="width: 50px; height: 40px;" alt="">  ${item.nombre} - $ ${
       item.precio * item.cantidad.toFixed(2)
     } Cantidad: ${
       item.cantidad
