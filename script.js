@@ -1,5 +1,5 @@
 // creo un array vacio, que representa el carrito donde se van a agregar los items
-const carrito = [];
+const carrito = JSON.parse(localStorage.getItem('carrito')) || [];;
 
 // contiene una lista de boosters distintos
 const boosters = [
@@ -42,6 +42,8 @@ function agregarAlCarrito(product) {
     carrito.push(product);
   }
 
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+
   actualizarCarrito();
 }
 
@@ -61,7 +63,7 @@ function actualizarCarrito() {
       item.precio * item.cantidad.toFixed(2)
     } Cantidad: ${
       item.cantidad
-    } <button class="btn btn-success plus">+</button ><button class="btn btn-danger less">-</button> `;
+    } <button class="btn btn-success mas">+</button ><button class="btn btn-danger less">-</button> `;
     cartItems.appendChild(li);
 
     total += item.precio * item.cantidad;
@@ -77,3 +79,4 @@ addToCartButtons.forEach((button, index) => {
 });
 
 actualizarCarrito();
+
