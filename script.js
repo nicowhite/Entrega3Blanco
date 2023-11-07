@@ -1,5 +1,4 @@
-
-const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 const boosters = [
   {
@@ -38,7 +37,7 @@ function agregarAlCarrito(product) {
     carrito.push(product);
   }
 
-  localStorage.setItem('carrito', JSON.stringify(carrito));
+  localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarCarrito();
 }
 
@@ -53,16 +52,15 @@ function actualizarCarrito() {
     const li = document.createElement("li");
     li.innerHTML = `  <img src="${
       item.imagen
-    }" style="width: 50px; height: 40px;" alt="">  ${item.nombre} - $ ${
-      (item.precio * item.cantidad).toFixed(2)
-    } Cantidad: ${item.cantidad}
+    }" style="width: 50px; height: 40px;" alt="">  ${item.nombre} - $ ${(
+      item.precio * item.cantidad
+    ).toFixed(2)} Cantidad: ${item.cantidad}
       <button class="btn btn-success mas">+</button>
       <button class="btn btn-danger less">-</button> `;
     cartItems.appendChild(li);
 
     total += item.precio * item.cantidad;
 
- 
     const plusButton = li.querySelector(".mas");
     plusButton.addEventListener("click", () => {
       item.cantidad += 1;
@@ -88,25 +86,16 @@ addToCartButtons.forEach((button, index) => {
   button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
 });
 
-
-
-
-
 const clearCartButton = document.getElementById("clear-cart-button");
 clearCartButton.addEventListener("click", clearCart);
 
 actualizarCarrito();
 
 function clearCart() {
- 
-  carrito.length = 0; 
+  carrito.length = 0;
   actualizarCarrito();
 
-  
-  localStorage.setItem('carrito', JSON.stringify(carrito));
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
-
-
-
 
 actualizarCarrito();
