@@ -27,14 +27,14 @@ const boosters = [
   },
 ];
 
-function agregarAlCarrito(product) {
-  const existingProduct = carrito.find((item) => item.id === product.id);
+function agregarAlCarrito(producto) {
+  const productoExistente = carrito.find((item) => item.id === producto.id);
 
-  if (existingProduct) {
-    existingProduct.cantidad += 1;
+  if (productoExistente) {
+    productoExistente.cantidad += 1;
   } else {
-    product.cantidad = 1;
-    carrito.push(product);
+    producto.cantidad = 1;
+    carrito.push(producto);
   }
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -42,10 +42,10 @@ function agregarAlCarrito(product) {
 }
 
 function actualizarCarrito() {
-  const cartItems = document.getElementById("cart-items");
+  const itemsCarrito = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("total");
 
-  cartItems.innerHTML = "";
+  itemsCarrito.innerHTML = "";
   let total = 0;
 
   carrito.forEach((item) => {
@@ -57,18 +57,18 @@ function actualizarCarrito() {
     ).toFixed(2)} Cantidad: ${item.cantidad}
       <button class="btn btn-success mas">+</button>
       <button class="btn btn-danger less">-</button> `;
-    cartItems.appendChild(li);
+    itemsCarrito.appendChild(li);
 
     total += item.precio * item.cantidad;
 
-    const plusButton = li.querySelector(".mas");
-    plusButton.addEventListener("click", () => {
+    const mas = li.querySelector(".mas");
+    mas.addEventListener("click", () => {
       item.cantidad += 1;
       actualizarCarrito();
     });
 
-    const minusButton = li.querySelector(".less");
-    minusButton.addEventListener("click", () => {
+    const menos = li.querySelector(".less");
+    menos.addEventListener("click", () => {
       if (item.cantidad > 1) {
         item.cantidad -= 1;
       } else {
@@ -81,17 +81,17 @@ function actualizarCarrito() {
   totalDisplay.textContent = total.toFixed(2);
 }
 
-const addToCartButtons = document.querySelectorAll(".agregar");
-addToCartButtons.forEach((button, index) => {
+const agregarBotones = document.querySelectorAll(".agregar");
+agregarBotones.forEach((button, index) => {
   button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
 });
 
-const clearCartButton = document.getElementById("clear-cart-button");
-clearCartButton.addEventListener("click", clearCart);
+const vaciarCarritoButton = document.getElementById("clear-cart-button");
+vaciarCarritoButton.addEventListener("click", vaciarCarrito);
 
 actualizarCarrito();
 
-function clearCart() {
+function vaciarCarrito() {
   carrito.length = 0;
   actualizarCarrito();
 
