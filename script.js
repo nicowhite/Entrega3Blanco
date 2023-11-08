@@ -1,3 +1,5 @@
+
+// si ya existe en el local storage, es parseado a un Array, si no se asigna un array vacio a carrito 
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 const boosters = [
@@ -27,6 +29,9 @@ const boosters = [
   },
 ];
 
+
+
+// funcion para agregar productos al carrito, chequea si ya existe segun el id, e incrementa la cantidad o agrega al carro
 function agregarAlCarrito(producto) {
   const productoExistente = carrito.find((item) => item.id === producto.id);
 
@@ -41,6 +46,10 @@ function agregarAlCarrito(producto) {
   actualizarCarrito();
 }
 
+
+
+
+// actualiza el carrito y calcula el total que cuesta
 function actualizarCarrito() {
   const itemsCarrito = document.getElementById("cart-items");
   const totalDisplay = document.getElementById("total");
@@ -56,7 +65,7 @@ function actualizarCarrito() {
       item.precio * item.cantidad
     ).toFixed(2)} Cantidad: ${item.cantidad}
       <button class="btn btn-success mas">+</button>
-      <button class="btn btn-danger less">-</button> `;
+      <button class="btn btn-danger menos">-</button> `;
     itemsCarrito.appendChild(li);
 
     total += item.precio * item.cantidad;
@@ -67,7 +76,7 @@ function actualizarCarrito() {
       actualizarCarrito();
     });
 
-    const menos = li.querySelector(".less");
+    const menos = li.querySelector(".menos");
     menos.addEventListener("click", () => {
       if (item.cantidad > 1) {
         item.cantidad -= 1;
@@ -81,6 +90,7 @@ function actualizarCarrito() {
   totalDisplay.textContent = total.toFixed(2);
 }
 
+// busca la clase agregar, y agrega un event listener para callear a la funcion agregarAlcarrito que agrega el correspondiente producto al carrito 
 const agregarBotones = document.querySelectorAll(".agregar");
 agregarBotones.forEach((button, index) => {
   button.addEventListener("click", () => agregarAlCarrito(boosters[index]));
@@ -91,6 +101,8 @@ vaciarCarritoButton.addEventListener("click", vaciarCarrito);
 
 actualizarCarrito();
 
+
+// vacia el carrito, y lo elimina del Local storage 
 function vaciarCarrito() {
   carrito.length = 0;
   actualizarCarrito();
